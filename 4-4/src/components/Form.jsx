@@ -2,12 +2,8 @@ import React from "react";
 
 class Form extends React.Component {
     state = {
-        firsName: '',
         email: '',
-        message: '',
-        select: '',
-        subscription: false,
-        gender: ''
+        isAgreeWithTerms: false,
     }
 
     handelChange = (event) => {
@@ -25,67 +21,43 @@ class Form extends React.Component {
         }
     }
 
+    registration = () => {
+        if (this.state.email.length < 5){
+            alert('Длина email должна быть не менее 5 символов.');
+            return;
+        }
+        if (!this.state.isAgreeWithTerms){
+            alert('Нет галки.');
+            return;
+        }
+        alert('Вы подписаны.');
+        this.setState({email: '', isAgreeWithTerms: false});
+
+    }
+
 
     render() {
-        const {firsName, email, message, select, subscription, gender} = this.state;
-        return <div>
+        const {email, isAgreeWithTerms} = this.state;
+        return <div>            
             <input 
-            type="text" 
-            name="firsName"
-            placeholder="firsName"
-            value={firsName}
-            onChange={this.handelChange}
-            onBlur={this.validateName}
-            />
-            <input 
-            type="email" 
-            name="email"
-            placeholder="email"
-            value={email}
-            onChange={this.handelChange}
-            />
-            <br/>
-            <textarea 
-                name="message"
-                value={message}
+                type="email" 
+                name="email"
+                placeholder="email"
+                value={email}
                 onChange={this.handelChange}
             />
-            <br/>            
-            <select 
-                name="select"
-                value={select}
-                onChange={this.handelChange}
-            >
-                <option value="" disabled></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-            <br/>
+            <br />
             <label>
-                <input 
-                    type="checkbox" 
-                    name="subscription"    
-                    checked={subscription}
+                <input
+                    type="checkbox"
+                    name="isAgreeWithTerms"
+                    checked={isAgreeWithTerms}
                     onChange={this.handelCheckboxChange}
-                />   
-                Subscription 
+                />
+                I agree with terms and conditions
             </label>
-            <br/>
-            <input 
-                type="radio" 
-                name="gender"
-                value="male"
-                onChange={this.handelChange}
-                checked={gender === "male"}
-            /> Male  
-            <input 
-                type="radio" 
-                name="gender"
-                value="female"
-                onChange={this.handelChange}
-                checked={gender === "female"}
-            /> Female  
+            <br />
+            <button onClick={this.registration}>Send</button> 
             
         </div>
     }
