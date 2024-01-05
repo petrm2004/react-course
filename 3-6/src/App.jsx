@@ -6,41 +6,59 @@ class App extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      posts: [],
-      loading: true,
-      comments: []
+      count: 0,
+      isCounting: false,
     };
   }
 
-  componentDidMount() {
-    console.log('componentDidMount');
-    fetch('https://jsonplaceholder.typicode.com/posts')
-    .then(response => response.json())
-    .then(data => this.setState({posts: data, loading: false}))
+  handleStart = () => {
+    this.setState({isCounting: true});
+    this.counterId = setInterval(() => {
+      console.log('timerId');
+      this.setState({count: this.state.count + 1});
+    }, 1000)
+  }
 
-    this.timerId = setInterval(() => {
-      fetch('https://jsonplaceholder.typicode.com/comments')
-      .then(response => response.json())
-      .then(data => this.setState({comments: data}))
-    }, 3000)
+  handleStop = () => {
+    this.setState({isCounting: false});
+    clearInterval(this.counterId);
+  }
+
+  handleReset = () => {
+    this.setState({isCounting: false, count: 0});
+    clearInterval(this.counterId);
+  }
+
+  componentDidMount() {
+    const userCount = localStorage.getItem("timer");
+    if (userCount) {
+      this.setState({count: +userCount});
+    }
+    
   }
 
   componentDidUpdate() {
     console.log('componentDidUpdate');
-    clearInterval(this.timerId);
-    
+    localStorage.setItem("timer", this.state.count);    
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount');
+    clearInterval(this.counterId);
   }
 
   render() {
-    return (<div className="App">
-      {this.state.loading ? <h3>Загрузка ...</h3> : <h3>
-        {this.state.posts.length} загружено постов
-        </h3>}
-    </div> )
+    return (
+        <div className="App">
+            <h1>React Timer</h1>
+            <h3>{this.state.count}</h3>
+            {!this.state.isCounting ? (
+                <button onClick={this.handleStart}>Start</button>
+            ) : (
+                <button onClick={this.handleStop}>Stop</button>
+            )}
+            <button onClick={this.handleReset}>Reset</button>
+        </div>
+    );
   }
 }
 
