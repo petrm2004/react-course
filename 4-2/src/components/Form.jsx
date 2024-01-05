@@ -11,6 +11,13 @@ class Form extends React.Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
+    validateName = () => {
+        if (this.state.firsName.length < 5){
+            alert('Длина имени должна быть не менее 5 символов.');
+        }
+    }
+
+
     render() {
         const {firsName, email} = this.state;
         return <div>
@@ -20,6 +27,7 @@ class Form extends React.Component {
             placeholder="firsName"
             value={firsName}
             onChange={this.handelChange}
+            onBlur={this.validateName}
             />
             <input 
             type="email" 
