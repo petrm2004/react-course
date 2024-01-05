@@ -1,5 +1,5 @@
 {
-  "name": "react-course",
+  "name": "3-6",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -34,14 +34,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "workspaces": [
-    "2-3",
-    "2-5",
-    "2-7",
-    "3-2",
-    "3-3",
-    "3-5",
-    "3-6"
-  ]
+  }
 }
