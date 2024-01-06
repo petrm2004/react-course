@@ -3,11 +3,8 @@ import React from "react";
 class Form extends React.Component {
     constructor(){
         super();
-        this.state = {
-            firsName: '',
-            email: '',
-        }
         this.firsNameRef = React.createRef();
+        this.emailRef = React.createRef();
     }
     
     
@@ -26,16 +23,29 @@ class Form extends React.Component {
         this.firsNameRef.current.focus();
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+        if(this.firsNameRef.current.value.length < 4)
+        {
+            alert('firsNameRef  < 4');
+            return;
+        }
+        if(this.emailRef.current.value.length < 4)
+        {
+            alert('emailRef  < 4');
+            return;
+        }
+        //send
+        this.firsNameRef.current.value = '';
+        this.emailRef.current.value = '';
+    }
 
     render() {
-        const {firsName, email} = this.state;
-        return <div>            
+        return <form onSubmit={this.handleSubmit}>            
             <input 
                 type="text" 
                 name="firsName"
                 placeholder="firsName"
-                value={firsName}
-                onChange={this.handelChange}
                 ref={this.firsNameRef}
                
             />
@@ -43,11 +53,11 @@ class Form extends React.Component {
                 type="email" 
                 name="email"
                 placeholder="email"
-                value={email}
-                onChange={this.handelChange}
+                ref={this.emailRef}
             />
+            <button>Отправить</button>
             
-        </div>
+        </form>
     }
 }
 
