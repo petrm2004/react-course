@@ -1,4 +1,3 @@
-import { render } from "@testing-library/react"
 import React from "react"
 import {Movies} from "../components/Movies"
 import {Preloader} from "../components/Preloader"
@@ -13,17 +12,25 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://www.omdbapi.com/?s=matrix&apikey=${API_KEY}&page=2`)
+        fetch(`https://www.omdbapi.com/?s=matrix&apikey=${API_KEY}&page=2`)
         .then(response => response.json())
         .then(data => this.setState({movies: data.Search, loading: false}))
+        .catch((err) => {
+            console.log(err);
+            this.setState({loading: false})
+        })
     }
 
     searchMovies = (str, type) => {
         this.setState({loading: true});
         const paramType = type === 'all' ? '' : `&type=${type}`
-        fetch(`http://www.omdbapi.com/?s=${str}&apikey=${API_KEY}`+paramType)
+        fetch(`https://www.omdbapi.com/?s=${str}&apikey=${API_KEY}`+paramType)
         .then(response => response.json())
         .then(data => this.setState({movies: data.Search, loading: false}))
+        .catch((err) => {
+            console.log(err);
+            this.setState({loading: false})
+        })
     }
 
 

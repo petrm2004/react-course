@@ -1,0 +1,28 @@
+= Описание
+
+== Публикация на github
+
+Установлен пакет `npm install gh-pages --save-dev`.
+
+Добавлены команды `deploy` и `predeploy` в _package.json_
+[source,json]
+----
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+----
+
+При запуске команды `npm run deploy` сначало выполнится `predeploy`, так как есть приставка _pre_.
+
+Добавлен параметр `homepage` в _package.json_
+[source,json]
+----
+"homepage": "https://petrm2004.github.io/react-course",
+----
+
